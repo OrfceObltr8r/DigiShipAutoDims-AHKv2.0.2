@@ -16,7 +16,7 @@ TxtBox.Show()
 ProcessUserInput(*)
 {
 boxes := EditGetLineCount("Edit1","Scanned")
-IniWrite(boxes, "TempVar.ini", "Dims", "Boxes")
+IniWrite(boxes, "Functions/TempVar.ini", "Dims", "Boxes")
 TxtBox.AddStatusBar(,"You Scanned " boxes-1 " labels")
 loop boxes  
         {
@@ -26,17 +26,17 @@ sleep 200
             
    
         
-    BoxQty := IniRead("TempVar.ini","Dims", "Boxes")
-    Date := IniRead("TempVar.ini", "MultiDims", "Date")			;Retrieves values from ini file
-    Weight := IniRead("TempVar.ini" ,"MultiDims", "Weight")
-    Length := IniRead("TempVar.ini", "MultiDims", "Length")
-    Width := IniRead("TempVar.ini", "MultiDims", "Width")
-    Height := IniRead("TempVar.ini", "MultiDims", "Height")
+    BoxQty := IniRead("Functions/TempVar.ini","Dims", "Boxes")
+    Date := IniRead("Functions/TempVar.ini", "MultiDims", "Date")			;Retrieves values from ini file
+    Weight := IniRead("Functions/TempVar.ini" ,"MultiDims", "Weight")
+    Length := IniRead("Functions/TempVar.ini", "MultiDims", "Length")
+    Width := IniRead("Functions/TempVar.ini", "MultiDims", "Width")
+    Height := IniRead("Functions/TempVar.ini", "MultiDims", "Height")
 
-    Weight2 := IniRead("TempVar.ini" ,"MultiDims", "Weight2")
-    Length2 := IniRead("TempVar.ini", "MultiDims", "Length2")
-    Width2 := IniRead("TempVar.ini", "MultiDims", "Width2")
-    Height2 := IniRead("TempVar.ini", "MultiDims", "Height2")
+    Weight2 := IniRead("Functions/TempVar.ini" ,"MultiDims", "Weight2")
+    Length2 := IniRead("Functions/TempVar.ini", "MultiDims", "Length2")
+    Width2 := IniRead("Functions/TempVar.ini", "MultiDims", "Width2")
+    Height2 := IniRead("Functions/TempVar.ini", "MultiDims", "Height2")
 
     WinActivate ("Shipments") 
     WinMaximize ("Shipments")
@@ -48,7 +48,7 @@ sleep 200
 	sleep 200				;delay before copying current label
     OrderCut ;Custom Function
 	WinActivate ("Shipments")
-	Sleep 1000					;wait before pasting current label # (increase if Digital Shipper is taking too long to return to Shipments tab)
+	Sleep 2000					;wait before pasting current label # (increase if Digital Shipper is taking too long to return to Shipments tab)
     Retry:
 	ClipboardPaste  ;Custom Function
     
@@ -118,7 +118,7 @@ sleep 200
 		}
 
 
-	sleep 100
+	sleep 200
     NewOrder:
     WinActivate ("Scanned")
     Send "{down}"

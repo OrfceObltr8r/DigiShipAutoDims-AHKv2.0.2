@@ -40,27 +40,27 @@ F24::	;SINGLE BOX GUI SETUP 1
 			SavedHeight := SavedDims.Height
             SavedAcct := SavedDims.AcctNumber
 			
-			IniWrite(SavedDate, "TempVar.ini", "Dims", "Date")		;Writing saved values to an ini file
-			IniWrite(SavedWeight, "TempVar.ini", "Dims", "Weight") 
-			IniWrite(SavedLength, "TempVar.ini", "Dims", "Length")
-			IniWrite(SavedWidth, "TempVar.ini", "Dims", "Width")
-			IniWrite(SavedHeight, "TempVar.ini", "Dims", "Height")
-            IniWrite(SavedAcct, "TempVar.ini", "Dims", "Acct")
+			IniWrite(SavedDate, "Functions/TempVar.ini", "IntDims", "Date")		;Writing saved values to an ini file
+			IniWrite(SavedWeight, "Functions/TempVar.ini", "IntDims", "Weight") 
+			IniWrite(SavedLength, "Functions/TempVar.ini", "IntDims", "Length")
+			IniWrite(SavedWidth, "Functions/TempVar.ini", "IntDims", "Width")
+			IniWrite(SavedHeight, "Functions/TempVar.ini", "IntDims", "Height")
+            IniWrite(SavedAcct, "Functions/TempVar.ini", "IntDims", "Acct")
 		}
 	}
 F20::	;SINGLE BOX SHIPMENT 1
 	{
 	if WinActive("Shipments")
 		{
-		Date := IniRead("TempVar.ini", "Dims", "Date")			;Retrieves values from ini file
-		Weight := IniRead("TempVar.ini" ,"Dims", "Weight")
-		Length := IniRead("TempVar.ini", "Dims", "Length")
-		Width := IniRead("TempVar.ini", "Dims", "Width")
-		Height := IniRead("TempVar.ini", "Dims", "Height")
-        Acct := IniRead("TempVar.ini", "Dims", "Acct")
+		Date := IniRead("Functions/TempVar.ini", "IntDims", "Date")			;Retrieves values from ini file
+		Weight := IniRead("Functions/TempVar.ini" ,"IntDims", "Weight")
+		Length := IniRead("Functions/TempVar.ini", "IntDims", "Length")
+		Width := IniRead("Functions/TempVar.ini", "IntDims", "Width")
+		Height := IniRead("Functions/TempVar.ini", "IntDims", "Height")
+        Acct := IniRead("Functions/TempVar.ini", "IntDims", "Acct")
 
-		SetKeyDelay 200
-		Sleep 600
+		
+		Sleep 500
 		Send "{tab 17}"
 			Send Date			;Ship Date as MM/DD/YYYY / leave blank if you wish to used today's date
 		Send "{Tab 4}"
@@ -72,9 +72,19 @@ F20::	;SINGLE BOX SHIPMENT 1
 		send "{tab}"
 			Send Height		;height variable
         send "{tab 42}" ;may vary depending on # of bookmarks
-        sleep 700
+        sleep 300
         send "{enter}"  ;open "International Shipment" submenu
-        sleep 800
+        
+            ExportReady := false
+            While (!ExportReady) { ;Checks to see if the Export Window is open before proceeding
+                If ImageSearch(&X, &Y, 357, 266, 569, 313, "Functions\ShipmentExport.bmp"){
+                    ExportReady := true
+                    
+                }
+                sleep 100
+            }
+  
+        sleep 400
             CoordMode "Mouse", "Screen"
             Click 464, 290, "left"     ;Click "Add Shipment Export"
         sleep 400
@@ -103,7 +113,6 @@ F20::	;SINGLE BOX SHIPMENT 1
         send "{Shift Up}"
         send "{enter}"
         sleep 700
-
 
 
 
@@ -156,7 +165,7 @@ F20::	;SINGLE BOX SHIPMENT 1
            
         Click 443, 673, "left"  ;close small window
         sleep 400
-        Click 907, 532, "left"  ;check special instructions
+        Click 920, 534, "left"  ;check special instructions
         sleep 400
         send "{tab 3}"
         send "{enter}"
@@ -172,4 +181,9 @@ F20::	;SINGLE BOX SHIPMENT 1
 
 F8:: Reload
 
+^space::
+	{
+		WinSetAlwaysOnTop -1, "A"
+	}
+    
 Return

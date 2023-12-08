@@ -1,9 +1,8 @@
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-#Include Functions\Func.ahk
 
 Kill := (*) => ExitApp()
-; WinSetAlwaysOnTop -1, "Freight Density Calculator.ahk"
+
 
 Calc := Gui(,"Freight Calculator")
 Calc.BackColor := "c002451"
@@ -42,6 +41,7 @@ Calc.SetFont("s13 q5 c4ABDA1","Gill Sans MT")
     Calc.AddButton("x170 h26","Calculate").OnEvent("Click", CalculateFreight)
     Calc.OnEvent("Close", Kill)
 Calc.Show()
+WinSetAlwaysOnTop 1, "Freight Calculator"
 
 CalculateFreight(*)
 {
@@ -259,7 +259,7 @@ CalculateFreight(*)
                 case (SkidDensity4 < 1):
                     NMFC4 := "176050 01"
                     Class4 := "400"
-                case (SkidDensity4 >= 1 and SkidDensity4< 2):
+                case (SkidDensity4 >= 1 and SkidDensity4 < 2):
                     NMFC4 := "176050 02"
                     Class4 := "300"
                 case (SkidDensity4 >= 2 and SkidDensity4 < 4):
@@ -352,7 +352,8 @@ CalculateFreight(*)
             }
         
 
-    Results.AddText("xm+90 ","Total Weight: " TotalWeight)
+    Results.AddText("xm+90 ","Total Weight: ")
+    Results.AddText(" x+5 cred", TotalWeight)
     Results.AddEdit("x+20",NMFCFinal)
     Results.AddEdit("X+10", ClassFinal)
     Results.Show()
